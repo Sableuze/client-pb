@@ -32,4 +32,20 @@ export class TransportService {
       return null;
     }
   }
+
+  async addRow(payload: ITransport) {
+    try {
+      const { data } = await api.post('transport/add', payload);
+      return data as ITransport;
+    } catch (err) {
+      return null;
+    }
+  }
+  async deleteRow(id: ITransport['id']) {
+    try {
+      await api.post('transport/delete', { id });
+    } catch (err) {
+      return null;
+    }
+  }
 }

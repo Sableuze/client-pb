@@ -35,18 +35,22 @@ export class TransportStore {
     this.setTableData(data.rows);
   }
 
-  onRowAdd(payload: TransportAddState): void {
+  async onRowAdd(payload: TransportAddState) {
     const newRow = {
       ...payload,
-      typeId: +payload.typeId,
-      name: 'FILL',
+      organisationId: 1,
     };
-    this.tableData = [...this.tableData, newRow];
-    //api.onRowAdd
+    const data = await this.transportService.addRow(newRow);
+    if (data) {
+      this.tableData = [...this.tableData, data];
+    }
   }
 
-  onRowDelete(id: number) {
-    this.tableData = this.tableData.filter((row) => row.id !== id);
+  async onRowDelete(id: number) {
+    if (await this.transportService.deleteRow(id)) {
+      this.tableData = this.tableData.filter((row) => row.id !== id);
+    }
+
     // api.onRowDelete
   }
 

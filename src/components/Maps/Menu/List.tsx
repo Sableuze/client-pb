@@ -33,7 +33,7 @@ export function List(props: IListProps) {
               {item.regNumber}
             </Typography>
             <Typography fontSize={'1rem'} color={'#808080'}>
-              {item.organisation?.name}
+              {item.organisationId}
             </Typography>
           </Box>
         </Box>

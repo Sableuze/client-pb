@@ -1,72 +1,76 @@
-import { IOrganization, ITransport } from '@app/models';
-
-const orgranization: IOrganization = {
-  id: 1,
-  name: 'OOO Test',
-};
+import { ITransport } from '@app/models';
 
 export const items: ITransport[] = [
   {
     id: 1,
     name: 'Vaz',
     regNumber: 'А452РТ152',
-    organisation: orgranization,
+    organisationId: 1,
     typeId: 1,
+    avgConsumption: 0,
   },
   {
     id: 2,
     name: 'Vaz',
     regNumber: 'А452РТ153',
-    organisation: orgranization,
+    organisationId: 1,
     typeId: 1,
+    avgConsumption: 0,
   },
   {
     id: 3,
     name: 'Vaz',
     regNumber: 'А452РТ154',
-    organisation: orgranization,
+    organisationId: 1,
     typeId: 1,
+    avgConsumption: 0,
   },
   {
     id: 4,
     name: 'Vaz',
     regNumber: 'А452РТ154',
-    organisation: orgranization,
+    organisationId: 1,
     typeId: 1,
+    avgConsumption: 0,
   },
   {
     id: 5,
     name: 'Vaz',
     regNumber: 'А452РТ154',
-    organisation: orgranization,
+    organisationId: 1,
     typeId: 1,
+    avgConsumption: 0,
   },
   {
     id: 6,
     name: 'Vaz',
     regNumber: 'А452РТ154',
-    organisation: orgranization,
+    organisationId: 1,
     typeId: 1,
+    avgConsumption: 0,
   },
   {
     id: 7,
     name: 'Vaz',
     regNumber: 'А452РТ154',
-    organisation: orgranization,
+    organisationId: 1,
     typeId: 1,
+    avgConsumption: 0,
   },
   {
     id: 8,
     name: 'Vaz',
     regNumber: 'А452РТ154',
-    organisation: orgranization,
+    organisationId: 1,
     typeId: 1,
+    avgConsumption: 0,
   },
   {
     id: 9,
     name: 'Vaz',
     regNumber: 'А452РТ154',
-    organisation: orgranization,
+    organisationId: 1,
     typeId: 1,
+    avgConsumption: 0,
   },
 ];

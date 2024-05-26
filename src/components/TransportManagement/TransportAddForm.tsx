@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
 import { IMaskInput } from 'react-imask';
 
-import { Button, Container, MenuItem, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  FormControlLabel,
+  MenuItem,
+  Switch,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 import { ITransport } from '@app/models';
 import { useStore } from '@app/store.tsx';
@@ -9,7 +18,7 @@ import { v4Int } from '@app/utils';
 
 export type TransportAddState = Pick<
   ITransport,
-  'typeId' | 'regNumber' | 'mileage' | 'createdAt' | 'id'
+  'typeId' | 'regNumber' | 'name' | 'createdAt' | 'avgConsumption' | 'id' | 'unit'
 >;
 
 type TransportAddFormProps = {
@@ -58,7 +67,13 @@ const VehicleForm: React.FC<TransportAddFormProps> = ({ onApply }) => {
   const [hasRegError, setHasRegError] = useState(false);
   const [type, setType] = useState<ViewType>(vehicleTypes[0]);
   const [regNumber, setRegNumber] = useState<TransportAddState['regNumber']>('');
-  const [mileage, setMileage] = useState<TransportAddState['mileage']>('');
+  const [name, setName] = useState<TransportAddState['name']>('');
+  const [consumption, setConsumption] = useState<string>();
+  const [unit, setUnit] = useState<TransportAddState['unit']>('L');
+
+  const onChangeUnit = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.target.checked ? setUnit('Kv') : setUnit('L');
+  };
 
   const validateRegNumber = () => {
     if (regNumber?.length && regNumber.length >= 7) {
@@ -76,7 +91,15 @@ const VehicleForm: React.FC<TransportAddFormProps> = ({ onApply }) => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (hasRegError) return;
-    onApply({ typeId: type.id, regNumber, mileage, createdAt: new Date(), id: v4Int() });
+    onApply({
+      typeId: parseInt(type.id),
+      regNumber,
+      name,
+      unit,
+      avgConsumption: parseFloat(consumption || '0'),
+      createdAt: new Date(),
+      id: v4Int(),
+    });
   };
 
   return (
@@ -101,7 +124,6 @@ const VehicleForm: React.FC<TransportAddFormProps> = ({ onApply }) => {
             </MenuItem>
           ))}
         </TextField>
-
         <TextField
           label="Гос. номер"
           value={regNumber}
@@ -124,23 +146,40 @@ const VehicleForm: React.FC<TransportAddFormProps> = ({ onApply }) => {
             },
           }}
         />
-
         <TextField
-          label="Пробег *"
-          name="mileage" // This must match the state object's property name
-          value={mileage}
-          onChange={({ target }) => setMileage(target.value)}
+          label="Название"
+          name="name" // This must match the state object's property name
+          value={name}
+          onChange={({ target }) => setName(target.value)}
           required
           fullWidth
           margin="normal"
           variant="outlined"
         />
+        <Box display="flex" justifyContent="space-between">
+          <TextField
+            label="Расход на 100 км"
+            name="consumption" // This must match the state object's property name
+            value={consumption}
+            onChange={({ target }) => setConsumption(target.value)}
+            required
+            type={'number'}
+            margin="normal"
+            variant="outlined"
+          />{' '}
+          <FormControlLabel
+            control={<Switch onChange={onChangeUnit} />}
+            className={'bold'}
+            label="У меня электрокар"
+          />
+        </Box>
+
         <Button
           type="submit"
           variant="contained"
           color="primary"
           style={{ marginTop: '16px' }}>
-          Submit
+          Добавить
         </Button>
       </form>
     </Container>
